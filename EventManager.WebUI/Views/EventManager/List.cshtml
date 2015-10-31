@@ -1,0 +1,48 @@
+﻿@model IEnumerable<EventManager.Model.Common.IEvent>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "Event List";
+
+}
+
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Description, "Edit", new { item.Id })
+            </td>
+            <td class="text-left">@item.Date.ToShortDateString()</td>
+            <td class="text-left">@item.Price.ToString("c")</td>
+            <td class="text-left">@item.Category</td>
+            <td class="text-center">
+                @using (Html.BeginForm("Delete", "Event"))
+                {
+                    @Html.Hidden("eventId", item.Id)
+                    <input type="submit" class="btn btn-default btn-xs" value="Delete" />
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
